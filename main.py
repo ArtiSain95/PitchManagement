@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from typing import List
 from models import Pitch
-from crud import create_pitch, get_all_pitches
+from crud import create_pitch, get_all_pitches, get_pitches_need_maintenance
 from database import connect_to_mongo, close_mongo_connection
 
 app = FastAPI()
@@ -24,3 +24,11 @@ async def get_all_pitches_handler():
     Retrieve all pitches.
     """
     return await get_all_pitches()
+
+
+@app.get("/pitches/maintenance/", response_model=List[Pitch])
+async def get_pitches_need_maintenance_handler():
+    """
+    Retrieve pitches that need maintenance.
+    """
+    return await get_pitches_need_maintenance()
