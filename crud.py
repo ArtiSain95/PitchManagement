@@ -48,3 +48,15 @@ async def get_pitches_need_maintenance() -> List[Pitch]:
     db = get_database()
     pitches = await db.pitches.find({"next_maintenance_date": {"$lte": datetime.utcnow()}}).to_list(length=None)
     return pitches
+
+
+async def get_pitches_need_replacement() -> List[Pitch]:
+    """
+    Retrieve pitches that need turf replacement from the database.
+
+    Returns:
+        List[Pitch]: List of pitches needing turf replacement.
+    """
+    db = get_database()
+    pitches = await db.pitches.find({"replacement_date": {"$lte": datetime.utcnow()}}).to_list(length=None)
+    return pitches
